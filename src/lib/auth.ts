@@ -1,5 +1,5 @@
 // ============================================================
-// Helpers de autenticación reutilizables
+// Reusable authentication helpers
 // ============================================================
 
 import { NextRequest } from 'next/server';
@@ -7,8 +7,8 @@ import jwt from 'jsonwebtoken';
 import type { JwtPayload, AuthUser } from '@/types/auth.types';
 
 /**
- * Extrae y verifica el JWT del request.
- * Retorna el payload o null si no hay sesión válida.
+ * Extracts and verifies the JWT from the request.
+ * Returns the payload or null when there is no valid session.
  */
 export function getAuthUser(request: NextRequest): AuthUser | null {
   try {
@@ -30,14 +30,14 @@ export function getAuthUser(request: NextRequest): AuthUser | null {
 }
 
 /**
- * Verifica que el usuario sea ADMIN.
+ * Checks whether the user is an ADMIN.
  */
 export function isAdmin(user: AuthUser): boolean {
   return user.role === 'ADMIN';
 }
 
 /**
- * Verifica que el usuario sea dueño del recurso o ADMIN.
+ * Checks whether the user owns the resource or is an ADMIN.
  */
 export function canModify(user: AuthUser, resourceOwnerId: string): boolean {
   return user.role === 'ADMIN' || user.id === resourceOwnerId;

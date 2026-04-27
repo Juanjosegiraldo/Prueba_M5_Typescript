@@ -15,7 +15,7 @@ export interface ValidationResult {
   errors: ValidationError[];
 }
 
-// --- Validar CreateCasaDto ---
+// --- Validate CreateCasaDto ---
 export function validateCreateCasa(body: unknown): ValidationResult {
   const errors: ValidationError[] = [];
 
@@ -43,7 +43,7 @@ export function validateCreateCasa(body: unknown): ValidationResult {
     errors.push({ field: 'descripcion', message: 'La descripción no puede superar 5000 caracteres' });
   }
 
-  // precio: number positivo
+  // precio: positive number
   if (data.precio === undefined || data.precio === null) {
     errors.push({ field: 'precio', message: 'El precio es requerido' });
   } else if (typeof data.precio !== 'number' || isNaN(data.precio)) {
@@ -54,7 +54,7 @@ export function validateCreateCasa(body: unknown): ValidationResult {
     errors.push({ field: 'precio', message: 'El precio ingresado es demasiado alto' });
   }
 
-  // imagenUrl: opcional, si viene debe ser string
+  // imagenUrl: optional, if present it must be a string
   if (data.imagenUrl !== undefined && data.imagenUrl !== null && typeof data.imagenUrl !== 'string') {
     errors.push({ field: 'imagenUrl', message: 'La URL de imagen debe ser texto' });
   }
@@ -62,7 +62,7 @@ export function validateCreateCasa(body: unknown): ValidationResult {
   return { valid: errors.length === 0, errors };
 }
 
-// --- Validar UpdateCasaDto ---
+// --- Validate UpdateCasaDto ---
 export function validateUpdateCasa(body: unknown): ValidationResult {
   const errors: ValidationError[] = [];
 
@@ -117,7 +117,7 @@ export function validateUpdateCasa(body: unknown): ValidationResult {
   return { valid: errors.length === 0, errors };
 }
 
-// --- Sanitizar CreateCasaDto (eliminar campos extra) ---
+// --- Sanitize CreateCasaDto (remove extra fields) ---
 export function sanitizeCreateCasa(body: Record<string, unknown>): CreateCasaDto {
   return {
     titulo: (body.titulo as string).trim(),
@@ -127,7 +127,7 @@ export function sanitizeCreateCasa(body: Record<string, unknown>): CreateCasaDto
   };
 }
 
-// --- Sanitizar UpdateCasaDto (solo los campos que llegan) ---
+// --- Sanitize UpdateCasaDto (only the fields that were sent) ---
 export function sanitizeUpdateCasa(body: Record<string, unknown>): UpdateCasaDto {
   const result: UpdateCasaDto = {};
   if (body.titulo !== undefined) result.titulo = (body.titulo as string).trim();

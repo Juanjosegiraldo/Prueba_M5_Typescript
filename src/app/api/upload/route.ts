@@ -26,10 +26,10 @@ export async function POST(request: NextRequest) {
 
     const ext = getImageExtension(file.name);
 
-    // Nombre único para evitar colisiones
+    // Unique filename to avoid collisions
     const uniqueName = `casa-${uuidv4()}.${ext}`;
 
-    // Subir a Supabase Storage bucket "casas"
+    // Upload to the "casas" Supabase Storage bucket
     const buffer = Buffer.from(await file.arrayBuffer());
     const { error } = await supabase.storage
       .from('casas')
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       return errorResponse('Error uploading to storage', 500);
     }
 
-    // Obtener URL pública
+    // Get the public URL
     const { data: publicData } = supabase.storage
       .from('casas')
       .getPublicUrl(uniqueName);

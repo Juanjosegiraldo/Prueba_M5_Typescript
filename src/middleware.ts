@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   const isDashboard = pathname.startsWith('/dashboard');
   const isAuthPage  = pathname.startsWith('/login') || pathname.startsWith('/register');
 
-  // Verificar si el access token es válido
+  // Check whether the access token is valid
   let isValidToken = false;
   if (authToken) {
     try {
@@ -22,18 +22,18 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // CASO A: intenta entrar al dashboard
+  // CASE A: user tries to access the dashboard
   if (isDashboard) {
-    // Token válido → dejar pasar sin parpadeo
+    // Valid token -> allow access without flicker
     if (isValidToken) return NextResponse.next();
-    // No hay refresh token → redirigir a login
+    // No refresh token -> redirect to login
     if (!refreshToken) return NextResponse.redirect(new URL('/login', request.url));
-    // Hay refresh token pero access expiró → dejar pasar,
-    // fetchWithRefresh lo renovará en el cliente
+    // There is a refresh token but the access token expired -> allow access,
+    // fetchWithRefresh will renew it on the client
     return NextResponse.next();
   }
 
-  // CASO B: intenta entrar a login/register con sesión activa
+  // CASE B: user tries to access login/register with an active session
   if (isAuthPage && (isValidToken || refreshToken)) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }

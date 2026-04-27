@@ -1,5 +1,5 @@
 // ============================================================
-// INTERFACES de Autenticación
+// Authentication interfaces
 // ============================================================
 
 export interface AuthUser {

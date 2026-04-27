@@ -66,19 +66,19 @@ export default function DashboardPage() {
   const [search,     setSearch]     = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // Modal crear/editar
+  // Create/edit modal
   const [modalOpen,   setModalOpen]   = useState(false);
   const [editTarget,  setEditTarget]  = useState<CasaResponseDto | null>(null);
   const [form,        setForm]        = useState(EMPTY_FORM);
   const [submitting,  setSubmitting]  = useState(false);
 
-  // Imagen
+  // Image
   const [imageFile,      setImageFile]      = useState<File | null>(null);
   const [imagePreview,   setImagePreview]   = useState<string | null>(null);
   const [imageUploading, setImageUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Eliminar / Detalle
+  // Delete / Detail
   const [deleteTarget, setDeleteTarget] = useState<CasaResponseDto | null>(null);
   const [deleting,     setDeleting]     = useState(false);
   const [detailCasa,   setDetailCasa]   = useState<CasaResponseDto | null>(null);
@@ -88,7 +88,7 @@ export default function DashboardPage() {
     if (!isAuthLoading && !user) router.replace("/login");
   }, [user, isAuthLoading, router]);
 
-  // Load casas
+  // Load houses
   const loadCasas = useCallback(async () => {
     if (isAuthLoading || !user) return;
     setIsLoading(true);
