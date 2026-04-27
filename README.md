@@ -131,6 +131,9 @@ JWT_SECRET="your_super_secret_key_change_in_production"
 
 # Node environment
 NODE_ENV="development"
+
+NEXT_PUBLIC_SUPABASE_URL="https://[PROJECT_REF].supabase.co"
+SUPABASE_SERVICE_ROLE_KEY="tu_service_role_key"
 ```
 
 ---
